@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 24, 2014 11:11:28 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.cooksys.models.TUsers" table="t_users" catalog="twitter">
+        <id name="userId" type="java.lang.Integer">
+            <column name="user_id" />
+            <generator class="identity" />
+        </id>
+        <property name="userName" type="string">
+            <column name="user_name" length="45" not-null="true" />
+        </property>
+        <property name="userPw" type="string">
+            <column name="user_pw" length="45" not-null="true" />
+        </property>
+        <property name="userRole" type="string">
+            <column name="user_role" length="45" not-null="true" />
+        </property>
+        <property name="userNickname" type="string">
+            <column name="user_nickname" length="45" not-null="true" />
+        </property>
+        <set name="TFollowings" table="t_following" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="com.cooksys.models.TFollowing" />
+        </set>
+        <set name="TTweetses" table="t_tweets" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="com.cooksys.models.TTweets" />
+        </set>
+    </class>
+</hibernate-mapping>

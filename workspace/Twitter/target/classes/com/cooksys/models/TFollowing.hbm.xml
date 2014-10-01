@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 24, 2014 11:11:28 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.cooksys.models.TFollowing" table="t_following" catalog="twitter">
+        <id name="idtFollowing" type="java.lang.Integer">
+            <column name="idt_following" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="TUsers" class="com.cooksys.models.TUsers" fetch="select">
+            <column name="user_id" not-null="true" />
+        </many-to-one>
+        <property name="userName" type="string">
+            <column name="user_name" length="45" not-null="true" />
+        </property>
+        <property name="userFollowing" type="string">
+            <column name="user_following" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

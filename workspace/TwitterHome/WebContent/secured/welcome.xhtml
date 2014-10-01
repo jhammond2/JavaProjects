@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>Tweater</title>
+</head>
+<h:head></h:head>
+<body>
+	<h:form id="form">
+		<p:poll interval="5" update="tweets" />
+		<p:layout style="min-width:200px;min-height:1000px;">
+			<p:layoutUnit position="west" resizable="true" size="300"
+				minSize="10" maxSize="400" style="background:black">
+				<h:panelGrid columns="1" cellpadding="5">
+					<h:panelGrid columns="1" cellpadding="5"
+						style="border-style:outset" width="250px">
+				FASTTRACK'D TWEATER
+				</h:panelGrid>
+				Welcome 
+					<h:outputLabel for="tweet" value="#{userAuthenticate.userNick}"
+						style="font-weight:bold" />
+
+					<p:inputTextarea id="tweet" maxlength="200" counter="count"
+						counterTemplate="{0} characters remaining." autoResize="false"
+						value="#{userAuthenticate.tweet}" />
+					<h:outputLabel id="count" style="font-weight:100" />
+
+
+					<p:commandButton value="Submit" update="tweet"
+						action="#{userAuthenticate.submitTweet()}" icon="ui-icon-check" />
+					<p:commandLink value="Following Feed"
+						action="/secured/following.xhtml?faces-redirect=true" />
+					<br />
+					<p:commandLink value="Logoff" action="#{userAuthenticate.logoff()}">
+						<p:confirm header="Logoff #{userAuthenticate.userNick}"
+							message="Are you sure?" icon="ui-icon-alert" />
+					</p:commandLink>
+					<p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+					<br />
+					<hr />
+				<p:dataList value="#{userAuthenticate.getFollowersSmall()}" var="tFollowing" type="unordered">
+        <f:facet name="header">
+            You are following:
+        </f:facet>
+        <p:commandLink id="test2"
+						actionListener="#{userAuthenticate.setSelectedUser(tFollowing.userFollowing)}"
+						action="/secured/user.xhtml?faces-redirect=true"
+						value="#{tFollowing.userFollowing}" />
+    </p:dataList>
+				</h:panelGrid>
+			</p:layoutUnit>
+			<p:layoutUnit position="center" style="background:black">
+				<p:dataList id="tweets" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {JumpToPageDropdown}"
+					rows="6" styleClass="paginated" value="#{indexTweets.getTweets()}"
+					var="tTweets" type="unordered">
+					<f:facet name="header">
+            Tweet Feed
+        </f:facet>
+
+
+					<p:commandLink id="test"
+						actionListener="#{userAuthenticate.setSelectedUser(tTweets.userNick)}"
+						action="/secured/user.xhtml?faces-redirect=true"
+						value="#{tTweets.userNick}" />
+					<br />
+					<sup>posted: #{tTweets.timeStamp}</sup>
+					<br />
+        #{tTweets.tweet}
+        <br />
+					<br />
+				</p:dataList>
+			</p:layoutUnit>
+
+		</p:layout>
+	</h:form>
+</body>
+</html>

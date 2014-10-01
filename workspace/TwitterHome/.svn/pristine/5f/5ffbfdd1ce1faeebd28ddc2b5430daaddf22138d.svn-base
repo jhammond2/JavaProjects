@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>Tweater:User #{userAuthenticate.selectedUser}</title>
+</head>
+<h:head></h:head>
+<body onload="#{userAuthenticate.followCheck()}">
+	<h:form>
+		<p:poll interval="5" update="tweets" />
+		<p:layout style="min-width:200px;min-height:1000px;">
+			<p:layoutUnit position="west" resizable="true" size="300"
+				minSize="10" maxSize="400" style="background:black">
+				<h:panelGrid columns="1" cellpadding="5">
+					<h:panelGrid columns="1" cellpadding="5"
+						style="border-style:outset" width="250px">
+				FASTTRACK'D TWEATER
+				</h:panelGrid>
+		Inspecting:
+			<h:outputLabel value="#{userAuthenticate.selectedUser}"
+						style="font-weight:bold" />
+
+					<p:commandButton value="follow" id="follow"
+						action="#{userAuthenticate.addFollow()}"
+						actionListener="#{userAuthenticate.followCheck()}" ajax="false"
+						icon="ui-icon-check" rendered="#{userAuthenticate.follow}" />
+					<p:commandButton value="unfollow" id="unfollow"
+						action="#{userAuthenticate.deleteFollow()}"
+						actionListener="#{userAuthenticate.followCheck()}" ajax="false"
+						icon="ui-icon-check" rendered="#{userAuthenticate.unfollow}" />
+					<p:commandLink id="home"
+						action="/secured/welcome.xhtml?faces-redirect=true">
+						<h:outputText value="Home" />
+					</p:commandLink>
+					<hr/>
+				</h:panelGrid>
+			</p:layoutUnit>
+			<p:layoutUnit position="center" style="background:black">
+				<p:dataList id="tweets"
+					value="#{indexTweets.getUserTweets(userAuthenticate.selectedUser)}"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {JumpToPageDropdown}"
+					rows="6" styleClass="paginated" var="tTweets" type="unordered">
+					<f:facet name="header">
+            #{userAuthenticate.selectedUser} Tweets
+        </f:facet>
+					<p:commandLink id="test"
+						actionListener="#{userAuthenticate.setSelectedUser(tTweets.userNick)}"
+						value="#{tTweets.userNick}" />
+					<br />
+					<sup> posted: #{tTweets.timeStamp}</sup>
+					<br />
+        #{tTweets.tweet}
+        <br />
+					<br />
+				</p:dataList>
+			</p:layoutUnit>
+
+		</p:layout>
+	</h:form>
+</body>
+</html>

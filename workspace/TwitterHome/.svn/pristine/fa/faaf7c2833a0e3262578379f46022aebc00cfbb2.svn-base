@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body bgcolor="white">
+	<h:form>
+		<h:panelGrid columns="1" cellpadding="5">
+			<h:outputLabel for="username" value="Username: "
+				style="font-color:white" />
+			<p:inputText id="username" size="30" maxlength="12"
+				value="#{userRegistration.userName}" />
+			<sup>Max length: 12 Characters!</sup>
+			<br />
+			<h:outputLabel for="pwd1" value="Password 1: *" />
+			<p:password id="pwd1" size="30" maxlength="25" value="#{userRegistration.userPw}" match="pwd2"
+				label="Password 1" required="true" feedback="true" inline="true" />
+
+			<h:outputLabel for="pwd2" value="Password 2: *" />
+			<p:password id="pwd2" size="30" maxlength="25" value="#{userRegistration.userPw}"
+				label="Password 2" required="true" feedback="true" inline="true" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<br />
+			<h:outputLabel for="userNick" value="Nickname: "
+				style="font-weight:bold" />
+			<p:inputText id="userNick" maxlength="20" size="30" value="#{userRegistration.userNick}" />
+
+
+			<p:commandButton value="Submit" onsuccess="parent.dlg.hide();"
+				action="#{userRegistration.registerUser()}" icon="ui-icon-check" />
+		</h:panelGrid>
+	</h:form>
+</body>
+</html>

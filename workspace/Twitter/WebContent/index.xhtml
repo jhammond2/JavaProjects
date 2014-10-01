@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+<h:form>
+<h:panelGrid columns="4" cellpadding="5">
+			<h:outputLabel for="username" value="Username: "
+				style="font-weight:bold" />
+			<p:inputText id="username" value="#{userAuthenticate.nameTest}" />
+			<h:outputLabel for="password" value="Password: "
+				style="font-weight:bold" />
+			<p:password id="password" value="#{userAuthenticate.pwTest}"
+				feedback="true" />
+			<p:remoteCommand name="rc"
+				actionListener="#{userAuthenticate.findUser()}" />
+			<p:commandButton value="Submit" onclick="rc()"
+				action="/secured/welcome.xhtml?faces-redirect=true"
+				icon="ui-icon-check" />
+			<p:commandLink value="New User Registration"
+				action="registration.xhtml?faces-redirect=true" />
+		</h:panelGrid>
+<p:dataList value="#{indexTweets.getTweets()}" var="tTweets" type="ordered">
+        <f:facet name="header">
+            Definition
+        </f:facet>
+        #{tTweets.userNick}, posted: #{tTweets.timeStamp} <br/>
+        #{tTweets.tweet}
+    </p:dataList>
+
+</h:form>
+</body> 
+</html>

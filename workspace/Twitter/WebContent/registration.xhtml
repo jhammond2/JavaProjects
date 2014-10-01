@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+<h:form>
+		<h:panelGrid columns="1" cellpadding="5">
+			<h:outputLabel for="username" value="Username: "
+				style="font-weight:bold" />
+			<p:inputText id="username" value="#{userRegistration.userName}" />
+			<br /><h:outputLabel for="pwd1" value="Password 1: *" />
+        <p:password id="pwd1" value="#{userRegistration.userPw}" match="pwd2" label="Password 1" required="true" feedback="true"/>
+ 
+        <h:outputLabel for="pwd2" value="Password 2: *" />
+        <p:password id="pwd2" value="#{userRegistration.userPw}" label="Password 2" required="true" feedback="true"/>
+			
+		<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<br />
+			<h:outputLabel for="userNick" value="Nickname: "
+				style="font-weight:bold" />
+			<p:inputText id="userNick" value="#{userRegistration.userNick}" />
+			
+			<p:remoteCommand name="rc"
+				actionListener="#{userRegistration.registerUser()}" />
+			<p:commandButton value="Submit" onclick="rc()"
+				action="index.xhtml?faces-redirect=true" icon="ui-icon-check" />
+		</h:panelGrid>
+	</h:form>
+</body> 
+</html>

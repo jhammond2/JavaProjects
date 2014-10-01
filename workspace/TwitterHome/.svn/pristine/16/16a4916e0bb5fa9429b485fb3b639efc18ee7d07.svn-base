@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>Tweater</title>
+</head>
+<h:head><meta charset="UTF-8"/>
+<meta name="description" content="FastTrack'D Tweater"/>
+<meta name="author" content="Justin Hammond"/>
+</h:head>
+<body>
+	<h:form>
+		<p:poll interval="5" update="table" />
+
+		<p:layout style="min-width:200px;min-height:1000px;">
+			<p:layoutUnit position="west" resizable="true" size="300"
+				minSize="10" maxSize="400" style="background:black">
+
+				<h:panelGrid columns="1" cellpadding="5">
+				<h:panelGrid columns="1" cellpadding="5"  style="border-style:outset" width="250px">
+				FASTTRACK'D TWEATER
+				</h:panelGrid>
+
+					<h:outputLabel for="username" value="Username: "
+						style="font-weight:bold" />
+					<p:inputText id="username" value="#{userAuthenticate.nameTest}" />
+					<br />
+					<h:outputLabel for="password" value="Password: "
+						style="font-weight:bold" />
+					<p:password id="password" value="#{userAuthenticate.pwTest}" />
+					<br />
+					<p:remoteCommand name="rc"
+						actionListener="#{userAuthenticate.findUser()}" />
+					<p:commandButton value="Submit" onclick="rc()"
+						action="/secured/welcome.xhtml?faces-redirect=true"
+						icon="ui-icon-check" />
+
+					<p:lightBox iframe="true" id="lighbox3" width="300" widgetVar="dlg">
+						<h:outputLink value="registration.xhtml?faces-redirect=true"
+							title="New User Registration">
+							<h:outputText value="New User Registration" />
+						</h:outputLink>
+					</p:lightBox>
+					<hr/>
+				</h:panelGrid>
+
+			</p:layoutUnit>
+
+
+
+			<p:layoutUnit position="center" style="background:black">
+
+				<p:dataList id="table" value="#{indexTweets.getTweets()}" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {JumpToPageDropdown}"
+					rows="6" styleClass="paginated"
+					var="tTweets" type="unordered">
+					<f:facet name="header">
+            Tweet Feed
+        </f:facet>
+        #{tTweets.userNick}<br />
+					<sup> posted: #{tTweets.timeStamp}</sup>
+					<br />
+        #{tTweets.tweet}
+        <br />
+					<br />
+				</p:dataList>
+
+			</p:layoutUnit>
+
+		</p:layout>
+	</h:form>
+</body>
+</html>
